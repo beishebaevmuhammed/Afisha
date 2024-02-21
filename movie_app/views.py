@@ -32,7 +32,7 @@ def movies_detail_view(request, id):
     try:
         movie_id = models.Movie.objects.get(id=id)
     except models.Movie.DoesNotExist:
-        return Response(status.HTTP_404_NOT_FOUND, data={'message': 'Director not found'})
+        return Response(status.HTTP_404_NOT_FOUND, data={'message': 'Movie not found'})
     data = serializer.MovieSerializer(movie_id).data
     return Response(data=data)
 
@@ -48,6 +48,6 @@ def reviews_detail_view(request, id):
     try:
         review_id = models.Review.objects.get(id=id)
     except models.Review.DoesNotExist:
-        return Response(status.HTTP_404_NOT_FOUND, data={'message': 'Director not found'})
+        return Response(status.HTTP_404_NOT_FOUND, data={'message': 'Review not found'})
     data = serializer.ReviewSerializer(review_id).data
     return Response(data=data)
