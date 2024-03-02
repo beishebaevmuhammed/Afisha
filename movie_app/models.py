@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Director(models.Model):
-    name = models.TextField(blank=True)
+    name = models.CharField(max_length=30, null=True)
     movies_count = models.IntegerField(default=0)
     def __str__(self):
         return self.name
