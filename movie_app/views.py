@@ -1,13 +1,16 @@
 import random
 
-from django.conf import settings
+from django.contrib.auth.models import User
+from django.shortcuts import render
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
-from rest_framework import status
+from django.conf import settings
+
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 from . import serializer, models
 from .serializer import RegistrationSerializer
@@ -175,14 +178,14 @@ def send_code_email(email):
 @api_view(['POST'])
 def verify_email(request):
     if request.method == 'POST':
-        code = request.data.get('code')
-        email = request.data.get('email')
+        verification_code = request.data.get('code')
+        email_verified = request.data.get('email')
 
-        if code and email:
-            user = models.RegistrationUser.objects.filter(email=email)
+        if verification_code and email_verified:
+            user = models.RegistrationUser.objects.filter(email_verified=email_verified)
             if user.exists():
                 user = user.first()
-                if user.verification_code == code:
+                if user.verification_code == verification_code:
                     user.email_verified = True
                     user.save()
                 else:

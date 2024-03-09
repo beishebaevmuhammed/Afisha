@@ -24,10 +24,9 @@ class DirectorSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Movie
-        fields = 'title'.split()
+        fields = 'title duration director'.split()
 
 
 class ReviewSerializer(serializers.ModelSerializer):
